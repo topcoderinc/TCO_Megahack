@@ -1,0 +1,71 @@
+<!-- header -->
+<header data-scroll-fixed-header="" data-ng-include="'partials/header.html'"></header>
+<!-- main content -->
+<div class="page">
+    <div class="header-msg">
+        Welcome to the eRules search engine - the eRSE provides a capability for you to search against pending EPA laws and regulations
+        based on specified criteria. You can also expand the results and determine how they're related to the Clean Air Act
+        as well as show linkages from the laws or regulations to programs that might be related.
+    </div>
+    <div class="content-box">
+        <div class="corner-mark-lg"></div>
+        <h1 class="title-center">Search Rules</h1>
+        <div class="search-item first-item">
+            <div class="search-item-name">Select State</div>
+            <div class="search-item-input">
+                <angucomplete-alt data-placeholder="Select State... " data-pause="100" data-selected-object="queries.state" data-local-data="states"
+                    data-search-fields="name" data-title-field="name" data-minlength="0" data-input-class="auto-complete"></angucomplete-alt>
+                <!--<input type="" name="" value="" placeholder="Select State">-->
+            </div>
+        </div>
+        <div class="search-item">
+            <div class="search-item-name">NAICS Code</div>
+            <div class="search-item-input">
+                <input type="" name="" value="" data-ng-model="queries.NAICSCode" placeholder="Fills Autamatically based on the State">
+            </div>
+        </div>
+        <div class="search-item">
+            <div class="search-item-name">Substance</div>
+            <div class="search-item-input">
+                <input type="" name="" value="" data-ng-model="queries.Substance" placeholder="Fills Autamatically based on the State">
+            </div>
+        </div>
+        <div class="search-item">
+            <div class="search-item-name">Program Name</div>
+            <div class="search-item-input">
+                <input type="" name="" value="" data-ng-model="queries.proName" placeholder="Fills Autamatically based on the State">
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <h3 class="title-center">Location Details</h3>
+        <div class="search-item-sm">
+            <div class="search-item-name">City</div>
+            <div class="search-item-input">
+                <angucomplete-alt data-placeholder="Select City..." data-pause="100" data-selected-object="queries.city" data-local-data="cities"
+                    data-search-fields="name" data-title-field="name" data-minlength="0" data-input-class="auto-complete"></angucomplete-alt>
+            </div>
+            <div class="search-item-name">Zipcode</div>
+            <div class="search-item-input">
+                <input type="" name="" value="" data-ng-model="queries.zipCode" placeholder="Enter Zip code">
+            </div>
+        </div>
+        <div class="search-item-sm">
+            <div class="search-item-name">Country</div>
+            <div class="search-item-input">
+                <angucomplete-alt data-placeholder="Select Country... " data-pause="100" data-selected-object="queries.country" data-local-data="countries"
+                    data-search-fields="name" data-title-field="name" data-minlength="0" data-input-class="auto-complete"></angucomplete-alt>
+            </div>
+            <div class="search-item-name">Street</div>
+            <div class="search-item-input">
+                <input type="" name="" value="" data-ng-model="queries.streetCode" placeholder="Enter Street code">
+            </div>
+        </div>
+        <div class="button-row">
+            <button type="" class="button-reset" data-ng-click="clearInput()">Reset</button> &nbsp;&nbsp;
+            <button type="" class="button-confirm" data-ng-click="goNext()">Go!</button>
+        </div>
+    </div>
+    <!--<div style="height:100px;"></div>-->
+</div>
+<!-- footer -->
+<footer data-ng-include="'partials/footer.html'"></footer>
