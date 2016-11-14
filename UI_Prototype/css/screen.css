@@ -184,8 +184,12 @@ header .inner {
   height: 514px;
   background: url(../i/home-bg.jpg) no-repeat;
   background-size: 100%;
+  text-align: center
 }
 
+header .header-logo {
+  padding-top: 90px;
+}
 
 /* footer */
 
