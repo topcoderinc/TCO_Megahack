@@ -3,9 +3,12 @@
 <!-- main content -->
 <div class="page">
     <div class="header-msg">
-        Welcome to the eRules search engine - the eRSE provides a capability for you to search against pending EPA laws and regulations
-        based on specified criteria. You can also expand the results and determine how they're related to the Clean Air Act
-        as well as show linkages from the laws or regulations to programs that might be related.
+        <h2>EPA - eRules Search Engine</h2>
+        Welcome to the eRules search engine - the eRSE provides a capability for you to search against the list of rules and regulations
+        that the EPA is proposing in order to enforce legislation that has been recently passed by Congress. Each of these
+        rules is open for comment and the EPA wants your input! Through this tool you can expand the results and determine
+        how they're related to the Clean Air Act, as well as see linkages from the proposed rules to programs that might
+        be related.
     </div>
     <div class="content-box">
         <div class="corner-mark-lg"></div>
@@ -13,18 +16,10 @@
         <div class="search-item first-item">
             <div class="search-item-name">Select State</div>
             <div class="search-item-input" data-ng-class="{'none-select': state.length == 0}">
-                <isteven-multi-select    
-                    input-model="states"    
-                    output-model="state"
-                    button-label="icon name"
-                    item-label="icon name maker"
-                    tick-property="ticked"
-                    selection-mode="single"
-                    translation="stateLang"
-                    helper-elements="filter"
-                >
-                </isteven-multi-select>            
-            </div>  
+                <isteven-multi-select input-model="states" output-model="state" button-label="icon name" item-label="icon name maker" tick-property="ticked"
+                    selection-mode="single" translation="stateLang" helper-elements="filter">
+                </isteven-multi-select>
+            </div>
         </div>
         <div class="search-item">
             <div class="search-item-name">NAICS Code</div>
@@ -49,16 +44,8 @@
         <div class="search-item-sm">
             <div class="search-item-name">City</div>
             <div class="search-item-input" data-ng-class="{'none-select': city.length == 0}">
-                <isteven-multi-select    
-                    input-model="cities"    
-                    output-model="city"
-                    button-label="icon name"
-                    item-label="icon name maker"
-                    tick-property="ticked"
-                    selection-mode="single"
-                    translation="cityLang"
-                    helper-elements="filter"
-                >
+                <isteven-multi-select input-model="cities" output-model="city" button-label="icon name" item-label="icon name maker" tick-property="ticked"
+                    selection-mode="single" translation="cityLang" helper-elements="filter">
                 </isteven-multi-select>
             </div>
             <div class="search-item-name">Zipcode</div>

@@ -443,6 +443,7 @@ h4 {
   border-radius: 2px;
   border: 1px solid #b8b8b8;
 }
+
 .search-item-input.none-select button {
   color: #b8b8b8;
   /*font-size: 16px;*/
@@ -722,9 +723,10 @@ input:-moz-placeholder {
   font-weight: 400;
 }
 
+
 /* alter css with .multiSelect */
 
-.multiSelect > button {
+.multiSelect>button {
   width: 100%;
   text-align: left;
   background-image: none;
@@ -735,11 +737,23 @@ input:-moz-placeholder {
 }
 
 .multiSelect .caret {
-    display: block;
-    position: absolute;
-    right: 20px;
-    top: 15px;
-    border-top: 8px solid #dedede;
-    border-right: 8px solid transparent;
-    border-left: 8px solid transparent;
+  display: block;
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  border-top: 8px solid #dedede;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+
+.comment-box {
+  width: 50%;
+  position: relative;
+  margin: auto;
+  padding-top: 23px;
+  border: 1px solid #dedede;
+}
+
+button.button-comment {
+  width: 200px;
 }

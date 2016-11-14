@@ -9,10 +9,10 @@
     appControllers.controller('homeCtrl',
         function ($scope, $rootScope, dataServices, $filter, $routeParams, loadingServices, $timeout, $location) {
             $scope.stateLang = {
-                nothingSelected : "Select State..."         
+                nothingSelected: "Select State..."
             };
             $scope.cityLang = {
-                nothingSelected : "Select City..."         
+                nothingSelected: "Select City..."
             };
             $scope.queries = {};
             $scope.states = [{
@@ -32,16 +32,20 @@
             }];
             $scope.clearInput = function () {
                 $scope.queries = {};
-                $scope.cities.forEach(function (e) { e.ticked = false; });
-                $scope.states.forEach(function (e) { e.ticked = false; })
-                
+                $scope.cities.forEach(function (e) {
+                    e.ticked = false;
+                });
+                $scope.states.forEach(function (e) {
+                    e.ticked = false;
+                })
+
             };
             $scope.goNext = function () {
                 loadingServices.show();
                 $timeout(function () {
                     $location.path('/results');
                     loadingServices.hide();
-                }, 2000);
+                }, 1000);
             };
 
 
@@ -53,7 +57,7 @@
 
     appControllers.controller('resultsCtrl',
         function ($scope, $rootScope, dataServices, $filter, $routeParams, loadingServices, $timeout, $location) {
-            
+
             $scope.goNext = function () {
                 $location.path('/details');
             };
@@ -69,15 +73,18 @@
 
             };
             loadingServices.init();
-            
+
         }
     );
 
     appControllers.controller('detailsCtrl',
-        function ($scope, $rootScope, dataServices, $filter, $routeParams, loadingServices, $timeout, $location) {
+        function ($scope, $rootScope, dataServices, $filter, $routeParams, loadingServices, $timeout, $location, $window) {
             loadingServices.init();
-            
+
             $scope.currentIndex = 0;
+
+            $scope.dockedID = "EPA-HQ-OAR-2016-0598-0001";
+
             $scope.goPrev = function () {
                 $location.path('/results');
             };
@@ -90,8 +97,12 @@
 
             };
 
+            $scope.commentRule = function () {
+                $window.open('https://www.regulations.gov/document?D=' + $scope.dockedID, '_blank');
+            };
+
             loadingServices.init();
-            
+
         }
     );
 
