@@ -191,6 +191,7 @@ header .header-logo {
   padding-top: 90px;
 }
 
+
 /* footer */
 
 footer {
@@ -416,7 +417,7 @@ h4 {
 
 .search-item-name {
   font-size: 16px;
-  line-height: 32px;
+  line-height: 40px;
   font-weight: 400;
 }
 
@@ -441,6 +442,11 @@ h4 {
   padding: 0 10px;
   border-radius: 2px;
   border: 1px solid #b8b8b8;
+}
+.search-item-input.none-select button {
+  color: #b8b8b8;
+  /*font-size: 16px;*/
+  font-weight: 400;
 }
 
 .search-item .search-item-name {
@@ -684,77 +690,56 @@ ul.facilites li {
   height: 62px;
 }
 
-
-/* auto-complete */
-
-.angucomplete-holder {
-  position: relative;
-}
-
-.angucomplete-holder .auto-complete {
+input::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  font-family: 'Titillium Web', sans-serif;
+  color: #b8b8b8;
   font-size: 14px;
   font-weight: 400;
-  color: #333;
+}
+
+input::-moz-placeholder {
+  /* Firefox 19+ */
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 14px;
+  color: #b8b8b8;
+  font-weight: 400;
+}
+
+input:-ms-input-placeholder {
+  /* IE 10+ */
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #b8b8b8;
+}
+
+input:-moz-placeholder {
+  /* Firefox 18- */
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 14px;
+  color: #b8b8b8;
+  font-weight: 400;
+}
+
+/* alter css with .multiSelect */
+
+.multiSelect > button {
+  width: 100%;
+  text-align: left;
+  background-image: none;
+  height: 40px;
   padding: 0 10px;
-  line-height: 36px;
-  width: 100%;
-  outline: none;
+  border-radius: 2px;
+  border: 1px solid #b8b8b8;
 }
 
-.angucomplete-holder::after {
-  content: "\25be";
-  position: absolute;
-  top: 0px;
-  right: 10px;
-  z-index: 100;
-  font-size: 30px;
-  color: gray;
-}
-
-.angucomplete-holder .auto-complete::-webkit-input-placeholder {
-  color: #999;
-  font-weight: 400;
-}
-
-.angucomplete-holder .auto-complete::-moz-placeholder {
-  color: #999;
-  font-weight: 400;
-}
-
-.angucomplete-holder .auto-complete:-ms-input-placeholder {
-  color: #999;
-  font-weight: 400;
-}
-
-.angucomplete-holder .auto-complete:-moz-placeholder {
-  color: #999;
-  font-weight: 400;
-}
-
-.angucomplete-holder .angucomplete-dropdown {
-  position: absolute;
-  top: 38px;
-  max-height: 300px;
-  overflow-y: scroll;
-  width: 100%;
-  left: 0;
-  background-color: #fff;
-  border: 1px solid #d8d8d8;
-  border-radius: 0;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  z-index: 100;
-}
-
-.angucomplete-holder .angucomplete-dropdown .angucomplete-row {
-  cursor: pointer;
-  padding: 0 0 0 18px;
-  line-height: 30px;
-  color: #666666;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.angucomplete-holder .angucomplete-dropdown .angucomplete-row:hover {
-  background: #08a5e1;
-  color: #ffffff;
+.multiSelect .caret {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    border-top: 8px solid #dedede;
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
 }

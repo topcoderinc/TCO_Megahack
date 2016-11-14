@@ -12,37 +12,54 @@
         <h1 class="title-center">Search Rules</h1>
         <div class="search-item first-item">
             <div class="search-item-name">Select State</div>
-            <div class="search-item-input">
-                <angucomplete-alt data-placeholder="Select State... " data-pause="100" data-selected-object="queries.state" data-local-data="states"
-                    data-search-fields="name" data-title-field="name" data-minlength="0" data-input-class="auto-complete"></angucomplete-alt>
-                <!--<input type="" name="" value="" placeholder="Select State">-->
-            </div>
+            <div class="search-item-input" data-ng-class="{'none-select': state.length == 0}">
+                <isteven-multi-select    
+                    input-model="states"    
+                    output-model="state"
+                    button-label="icon name"
+                    item-label="icon name maker"
+                    tick-property="ticked"
+                    selection-mode="single"
+                    translation="stateLang"
+                    helper-elements="filter"
+                >
+                </isteven-multi-select>            
+            </div>  
         </div>
         <div class="search-item">
             <div class="search-item-name">NAICS Code</div>
             <div class="search-item-input">
-                <input type="" name="" value="" data-ng-model="queries.NAICSCode" placeholder="Fills Autamatically based on the State">
+                <input type="" name="" value="" data-ng-model="queries.NAICSCode" placeholder="">
             </div>
         </div>
         <div class="search-item">
             <div class="search-item-name">Substance</div>
             <div class="search-item-input">
-                <input type="" name="" value="" data-ng-model="queries.Substance" placeholder="Fills Autamatically based on the State">
+                <input type="" name="" value="" data-ng-model="queries.Substance" placeholder="">
             </div>
         </div>
         <div class="search-item">
             <div class="search-item-name">Program Name</div>
             <div class="search-item-input">
-                <input type="" name="" value="" data-ng-model="queries.proName" placeholder="Fills Autamatically based on the State">
+                <input type="" name="" value="" data-ng-model="queries.proName" placeholder="">
             </div>
         </div>
         <div class="clearfix"></div>
         <h3 class="title-center">Location Details</h3>
         <div class="search-item-sm">
             <div class="search-item-name">City</div>
-            <div class="search-item-input">
-                <angucomplete-alt data-placeholder="Select City..." data-pause="100" data-selected-object="queries.city" data-local-data="cities"
-                    data-search-fields="name" data-title-field="name" data-minlength="0" data-input-class="auto-complete"></angucomplete-alt>
+            <div class="search-item-input" data-ng-class="{'none-select': city.length == 0}">
+                <isteven-multi-select    
+                    input-model="cities"    
+                    output-model="city"
+                    button-label="icon name"
+                    item-label="icon name maker"
+                    tick-property="ticked"
+                    selection-mode="single"
+                    translation="cityLang"
+                    helper-elements="filter"
+                >
+                </isteven-multi-select>
             </div>
             <div class="search-item-name">Zipcode</div>
             <div class="search-item-input">
@@ -50,11 +67,6 @@
             </div>
         </div>
         <div class="search-item-sm">
-            <div class="search-item-name">Country</div>
-            <div class="search-item-input">
-                <angucomplete-alt data-placeholder="Select Country... " data-pause="100" data-selected-object="queries.country" data-local-data="countries"
-                    data-search-fields="name" data-title-field="name" data-minlength="0" data-input-class="auto-complete"></angucomplete-alt>
-            </div>
             <div class="search-item-name">Street</div>
             <div class="search-item-input">
                 <input type="" name="" value="" data-ng-model="queries.streetCode" placeholder="Enter Street code">

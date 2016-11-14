@@ -6,7 +6,7 @@
     var app = angular
         .module('EPA', [
             'ngRoute',
-            "angucomplete-alt",
+            "isteven-multi-select",
             'EPA.controllers'
 
         ])

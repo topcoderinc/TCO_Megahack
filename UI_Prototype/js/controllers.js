@@ -8,6 +8,12 @@
     // landing page controller
     appControllers.controller('homeCtrl',
         function ($scope, $rootScope, dataServices, $filter, $routeParams, loadingServices, $timeout, $location) {
+            $scope.stateLang = {
+                nothingSelected : "Select State..."         
+            };
+            $scope.cityLang = {
+                nothingSelected : "Select City..."         
+            };
             $scope.queries = {};
             $scope.states = [{
                 name: 'California'
@@ -25,8 +31,10 @@
                 name: 'London'
             }];
             $scope.clearInput = function () {
-                $scope.$broadcast('angucomplete-alt:clearInput');
                 $scope.queries = {};
+                $scope.cities.forEach(function (e) { e.ticked = false; });
+                $scope.states.forEach(function (e) { e.ticked = false; })
+                
             };
             $scope.goNext = function () {
                 loadingServices.show();
