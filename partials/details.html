@@ -23,19 +23,12 @@
                 <br>
             </div>
             <br><br>
+            <h5 class="sub-title">Document Title</h5>
+            <h2 class="main-title">{{currentDocument.title.value}}</h2>
             <h5 class="sub-title">Rule Docket Title</h5>
-            <h2 class="main-title">National Ambient Air Quality Standards for Lead</h2>
+            <h3 class="main-sub-title">{{currentDocument.docketTitle.value}}</h3>
             <h5 class="sub-title">Rule Description</h5>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem
-                ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+            <p>{{currentDocument.summary && currentDocument.summary.trim().length > 0 ? currentDocument.summary : 'No description available.'}}</p>
             <nav>
                 <ul class="details-list">
                     <li data-ng-class="{current: currentIndex === 0}" data-ng-click="currentIndex = 0;">Addresses</li>
@@ -46,207 +39,76 @@
                 </ul>
             </nav>
             <div class="rule-des">
-                <p data-ng-show="currentIndex === 0">
-                    1 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                    laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
+                <p data-ng-show="currentIndex === 0" class="addresses">
+                    {{currentDocument.addresses && currentDocument.addresses.trim().length > 0 ? currentDocument.addresses : 'No address information available.'}}
                 </p>
-                <p data-ng-show="currentIndex === 1">
-                    2 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                    laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
+                <p data-ng-show="currentIndex === 1" class="dates">
+                    {{currentDocument.date && currentDocument.date.trim().length > 0 ? currentDocument.date : 'No date information available.'}}
                 </p>
-                <p data-ng-show="currentIndex === 2">
-                    3 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                    laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
+                <p data-ng-show="currentIndex === 2" class="contact">
+                    {{currentDocument.contact && currentDocument.contact.trim().length > 0 ? currentDocument.contact : 'No contact information available.'}}
                 </p>
-                <p data-ng-show="currentIndex === 3">
-                    4 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                    laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
+                <p data-ng-show="currentIndex === 3" class="supplementary">
+                    {{currentDocument.supInfo && currentDocument.supInfo.trim().length > 0 ? currentDocument.supInfo : 'No supplementary information available.'}}
                 </p>
-                <p data-ng-show="currentIndex === 4">
-                    5 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                    laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
-                </p>
+                <div data-ng-show="currentIndex === 4" class="more-details">
+                    <ul ng-show="regulations.length > 0">
+                        <li ng-repeat="regulation in regulations">
+                            <a ng-href="regulation.url">{{ regulation.title }}</a>
+                        </li>
+                    </ul>
+                    <p ng-show="regulations.length === 0">No additional details available.</p>
+                </div>
             </div>
             <br>
             <br>
-            <h2 class="title-center">The following facilities in your area might be affected :</h2>
-            <div class="details-map"></div>
-            <ul class="facilites">
-                <li>Facility Name lorem dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. tempor incididunt.</li>
-                <li>Facility Name lorem dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. tempor incididunt.</li>
-                <li>Facility Name lorem dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. tempor incididunt.</li>
-                <li>Facility Name lorem dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. tempor incididunt.</li>
-                <li>Facility Name lorem dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. tempor incididunt.</li>
-                <li>Facility Name lorem dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. tempor incididunt.</li>
-                <li>Facility Name lorem dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. tempor incididunt.</li>
-            </ul>
-            <div class="button-row">
-                <button class="button-load" data-ng-click="loadMore()">LOAD MORE</button>
+            <div ng-show="facilities.length > 0">
+                <h2 class="title-center">The following facilities in your area might be affected:</h2>
+                <div class="details-map" id="details-map"></div>
+                <ul class="facilites">
+                    <li ng-repeat="facility in facilities">{{ (facility.FacilityName ? facility.FacilityName : 'NAME UNSPECIFIED') }} - {{ (facility.LocationAddress + ', ' + facility.CityName + ', ' + facility.CountyName + ', ' + facility.StateAbbr + ' ' + facility.ZipCode).trim() }}</li>
+                </ul>
             </div>
-            <br><br>
-            <h2 class="title-center">Programs Affected :</h2>
-            <ul class="programs">
-                <li>
-                    <div class="corner-mark-small"></div>
-                    <h4>1.Name of the effected program</h4>
-                    <p>Short Description of the Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                        incididunt. Ut enim ad minim veniam,
-                    </p>
-                </li>
-                <li>
-                    <div class="corner-mark-small"></div>
-                    <h4>1.Name of the effected program</h4>
-                    <p>Short Description of the Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                        incididunt. Ut enim ad minim veniam,
-                    </p>
-                </li>
-                <li>
-                    <div class="corner-mark-small"></div>
-                    <h4>1.Name of the effected program</h4>
-                    <p>Short Description of the Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                        incididunt. Ut enim ad minim veniam,
-                    </p>
-                </li>
-                <li>
-                    <div class="corner-mark-small"></div>
-                    <h4>1.Name of the effected program</h4>
-                    <p>Short Description of the Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                        incididunt. Ut enim ad minim veniam,
-                    </p>
-                </li>
-                <li>
-                    <div class="corner-mark-small"></div>
-                    <h4>1.Name of the effected program</h4>
-                    <p>Short Description of the Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                        incididunt. Ut enim ad minim veniam,
-                    </p>
-                </li>
-                <li>
-                    <div class="corner-mark-small"></div>
-                    <h4>1.Name of the effected program</h4>
-                    <p>Short Description of the Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                        incididunt. Ut enim ad minim veniam,
-                    </p>
-                </li>
-                <li>
-                    <div class="corner-mark-small"></div>
-                    <h4>1.Name of the effected program</h4>
-                    <p>Short Description of the Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                        incididunt. Ut enim ad minim veniam,
-                    </p>
-                </li>
-                <li>
-                    <div class="corner-mark-small"></div>
-                    <h4>1.Name of the effected program</h4>
-                    <p>Short Description of the Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                        incididunt. Ut enim ad minim veniam,
-                    </p>
-                </li>
-                <li>
-                    <div class="corner-mark-small"></div>
-                    <h4>1.Name of the effected program</h4>
-                    <p>Short Description of the Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                        incididunt. Ut enim ad minim veniam,
-                    </p>
-                </li>
-            </ul>
-            <div class="button-row">
+            <!--div class="button-row">
                 <button class="button-load" data-ng-click="loadMore()">LOAD MORE</button>
-            </div>
+            </div-->
             <br><br>
-            <h2 class="title-center">NAICS Codes :</h2>
+            <div ng-show="affectedPrograms.length > 0">
+                <h2 class="title-center">Programs Affected</h2>
+                <ul class="programs">
+                    <li ng-repeat="program in affectedPrograms">
+                        <div class="corner-mark-small"></div>
+                        <h4>{{ program.name }}</h4>
+                        <p></p>
+                    </li>
+                </ul>
+                <!--div class="button-row">
+                    <button class="button-load" data-ng-click="loadMore()">LOAD MORE</button>
+                </div-->
+            </div>
+            <div class="clearfix"></div>
+            <br><br>
+            <div ng-show="relatedNaics.length > 0">
+            <h2 class="title-center">NAICS Codes</h2>
             <table class="results-table">
                 <thead>
                     <tr>
                         <td>Code</td>
-                        <td>Title</td>
+                        <td class="left">Title</td>
                         <td>Count</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit
-                        </td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit
-                        </td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit
-                        </td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit
-                        </td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit
-                        </td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit
-                        </td>
-                        <td>2</td>
+                    <tr ng-repeat="naics in relatedNaics">
+                        <td class="naics-code">{{ naics.code }}</td>
+                        <td>{{ fixNaicsLabel(naics.label) }}</td>
+                        <td class="center">1</td>
                     </tr>
                 </tbody>
             </table>
-            <div class="button-row">
+            <!--div class="button-row">
                 <button class="button-load" data-ng-click="loadMore()">LOAD MORE</button>
-            </div>
+            </div-->
             <br><br>
         </div>
     </div>
