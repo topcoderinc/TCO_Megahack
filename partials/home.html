@@ -24,23 +24,47 @@
         <div class="search-item">
             <div class="search-item-name">NAICS Code</div>
             <div class="search-item-input">
-                <input type="" name="" value="" data-ng-model="queries.NAICSCode" placeholder="">
+                <md-autocomplete
+                    md-search-text="naicsSearchText"
+                    md-selected-item="selectedNaics"
+                    md-items="item in lookupNaics(naicsSearchText)"
+                    md-delay="300"
+                    md-min-length="0"
+                    md-item-text="fixNaicsLabel(item.label)">
+                  <md-item-template>
+                    <span md-highlight-text="naicsSearchText" md-highlight-flags="^i">{{ fixNaicsLabel(item.label) }}</span>
+                  </md-item-template>
+                  <md-not-found>
+                    No NAICS codes matching <strong>{{naicsSearchText}}</strong> were found.
+                  </md-not-found>
+                </md-autocomplete>
             </div>
         </div>
         <div class="search-item">
             <div class="search-item-name">Substance</div>
             <div class="search-item-input">
-                <input type="" name="" value="" data-ng-model="queries.Substance" placeholder="">
+                <md-autocomplete
+                    md-search-text="substanceSearchText"
+                    md-selected-item="selectedSubstance"
+                    md-items="item in lookupSubstances(substanceSearchText)"
+                    md-delay="300"
+                    md-min-length="0"
+                    md-item-text="item.name">
+                  <md-item-template>
+                    <span md-highlight-text="substanceSearchText" md-highlight-flags="^i">{{item.name}}</span>
+                  </md-item-template>
+                  <md-not-found>
+                    No substances matching <strong>{{substanceSearchText}}</strong> were found.
+                  </md-not-found>
+                </md-autocomplete>
             </div>
         </div>
         <div class="search-item">
             <div class="search-item-name">Program Name</div>
             <div class="search-item-input">
-                <input type="" name="" value="" data-ng-model="queries.proName" placeholder="">
+                <input type="" name="" value="" data-ng-model="queries.ProgramName" placeholder="">
             </div>
         </div>
-        <div class="clearfix"></div>
-        <h3 class="title-center">Location Details</h3>
         <div class="search-item-sm">
             <div class="search-item-name">City</div>
             <div class="search-item-input" data-ng-class="{'none-select': city.length == 0}">
@@ -50,7 +74,7 @@
             </div>
             <div class="search-item-name">Zip Code</div>
             <div class="search-item-input">
-                <input type="" name="" value="" data-ng-model="queries.zipCode" placeholder="Enter Zip Code">
+                <input type="" name="" value="" data-ng-model="queries.ZipCode" placeholder="Enter Zip Code">
             </div>
         </div>
         <div class="search-item-sm">

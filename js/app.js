@@ -6,6 +6,7 @@
     var app = angular
         .module('EPA', [
             'ngRoute',
+            'ngMaterial',
             "isteven-multi-select",
             'EPA.controllers'
 

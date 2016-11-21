@@ -1,12 +1,24 @@
-# TCO_Megahack_eRules_Search_Engine_Frontend
-Welcome to the EPA eRules Search Engine! This project is part of the Megahack at the 2016 Topcoder Open: http://tco16.topcoder.com/tco-megahack/
+## Requirements
 
-There are the three repos that are part of the eRules Search Engine:
-https://github.com/topcoderinc/TCO_Megahack_eRules_Search_Engine_Frontend
-https://github.com/topcoderinc/TCO_Megahack_eRules_Search_Engine_Backend
-https://github.com/topcoderinc/TCO_Megahack_eRules_Search_Engine_API
-https://github.com/topcoderinc/TCO_Megahack_eRules_Search_Engine_XML_Parser
+- Nginx / Apache or other web server
+- Node.js 6+
+- mongodb
 
-Please feel free to checkout out our live site (http://tco16.topcoder.com/tco-megahack/) and issue some pull requests on our code!
+## Setup
 
--Topcoder
+- Setup the updated backend which can be found in the tco-megahack-backend folder included in the submission. The `README.md` file in this folder contains the necessary setup instructions.
+- Setup the frontend files to be accessible from a web server. We will assume tco-megahack to be the host name as an example. So the root path to access the application will be http://tco-megahack
+
+## Configuration
+
+You can set some configuration values to suit your environment by editing api/controllers.js
+
+- `apiBase` represents the base URL where the backend is set up.
+- `defaultDateFormat` represents the date format that will be used to displayed dates in the frontend
+- `pageLimit` represents the number of results to return for search results
+
+## Verification
+
+- Start the backend using `npm start`.
+- Make sure your web server is up and running
+- You should be able to search EPA rules after accessing frontend at http://tco-megahack

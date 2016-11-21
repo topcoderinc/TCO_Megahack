@@ -17,21 +17,21 @@
         <div class="search-panel">
             <div class="search-queries">
                 <div class="search-query search-query-sm">
-                    <div class="search-query-title">Select State</div>
-                    <div class="search-query-value search-query-value-state">Florida</div>
+                    <div class="search-query-title">State</div>
+                    <div class="search-query-value search-query-value-state"></div>
                 </div>
                 <div class="search-query">
                     <div class="search-query-title">Substance</div>
-                    <div class="search-query-value">Loremipsum Substance</div>
+                    <div class="search-query-value search-query-value-substance"></div>
                 </div>
-                <div class="search-query search-map"></div>
+                <div id="search-map" class="search-query search-map"></div>
                 <div class="search-query search-query-sm">
                     <div class="search-query-title">NAICS Code</div>
-                    <div class="search-query-value">0215-528-5868</div>
+                    <div class="search-query-value search-query-value-naics"></div>
                 </div>
                 <div class="search-query">
                     <div class="search-query-title">Program Name</div>
-                    <div class="search-query-value">Dolorsit lorem Program</div>
+                    <div class="search-query-value search-query-value-program"></div>
                 </div>
             </div>
         </div>
@@ -39,52 +39,23 @@
             <table class="results-table">
                 <thead>
                     <tr>
-                        <td>Docket ID</td>
-                        <td>Docket Name</td>
-                        <td>Clean Air Act</td>
-                        <td>Due</td>
-                        <td>Action</td>
+                        <td ng-repeat="header in tableHeaders">{{header}}</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="light">EPA-HQ-OAR-2010-0108-0174</td>
-                        <td class="light">National Ambient Air Quality Standards for Lead</td>
-                        <td class="yes-code">Yes</td>
-                        <td class="light">11-15-16 06:30pm ET</td>
-                        <td class="detail-code" data-ng-click="goNext()">Details ></td>
+                    <tr ng-repeat="result in results">
+                        <td class="light"><div>{{result.documentId}}</div></td>
+                        <td class="light"><div ng-attr-title="{{result.docketTitle}}">{{result.title}}</div></td>
+                        <td ng-class="result.isCAA ? 'yes-code center' : 'no-code center'"><div>{{result.isCAA ? 'Yes' : 'No'}}</div></td>
+                        <td class="light center"><div>{{result.commentDueDate | date:dateFormat}}</div></td>
+                        <td class="detail-code center" data-ng-click="loadDetails(result.documentId)"><div>Details ></div></td>
                     </tr>
-                    <tr>
-                        <td class="light">EPA-HQ-OAR-2010-0108-0174</td>
-                        <td class="light">National Ambient Air Quality Standards for Lead</td>
-                        <td class="yes-code">Yes</td>
-                        <td class="light">11-15-16 06:30pm ET</td>
-                        <td class="detail-code" data-ng-click="goNext()">Details ></td>
-                    </tr>
-                    <tr>
-                        <td class="light">EPA-HQ-OAR-2010-0108-0174</td>
-                        <td class="light">National Ambient Air Quality Standards for Lead</td>
-                        <td class="yes-code">Yes</td>
-                        <td class="light">11-15-16 06:30pm ET</td>
-                        <td class="detail-code" data-ng-click="goNext()">Details ></td>
-                    </tr>
-                    <tr>
-                        <td class="light">EPA-HQ-OAR-2010-0108-0174</td>
-                        <td class="light">National Ambient Air Quality Standards for Lead</td>
-                        <td class="yes-code">Yes</td>
-                        <td class="light">11-15-16 06:30pm ET</td>
-                        <td class="detail-code" data-ng-click="goNext()">Details ></td>
-                    </tr>
-                    <tr>
-                        <td class="light">EPA-HQ-OAR-2010-0108-0174</td>
-                        <td class="light">National Ambient Air Quality Standards for Lead</td>
-                        <td class="yes-code">Yes</td>
-                        <td class="light">11-15-16 06:30pm ET</td>
-                        <td class="detail-code" data-ng-click="goNext()">Details ></td>
+                    <tr ng-show="results.length === 0" ng-hide="results.length > 0">
+                        <td colspan="5" class="center">No results matching the specified criteria were found. Please <a href="#" ng-click="searchAgain()">try again</a> with different criteria.</td>
                     </tr>
                 </tbody>
             </table>
-            <div class="button-row">
+            <div class="button-row" ng-show="total < results.length" ng-hide="total >= results.length">
                 <button class="button-load" data-ng-click="loadMore()">LOAD MORE</button>
             </div>
         </div>
