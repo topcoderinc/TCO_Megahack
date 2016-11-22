@@ -5,7 +5,7 @@
     <div class="content-box">
         <div class="corner-mark-lg"></div>
         <h1 class="title-center"><button class="button-title" data-ng-click="goPrev()">< &#32;Back</button>Rule Details
-            <div class="title-info">Relationship to CAA : <span class="yes-code">YES</span></div>
+            <div class="title-info">Relationship to CAA : <span ng-class="isCaa(currentDocument.cfrPart.value) ? 'yes-code' : 'no-code'">{{ isCaa(currentDocument.cfrPart.value) ? 'YES' : 'NO' }}</span></div>
         </h1>
         <div class="clearfix"></div>
         <div class="details-panel">
@@ -40,21 +40,21 @@
             </nav>
             <div class="rule-des">
                 <p data-ng-show="currentIndex === 0" class="addresses">
-                    {{currentDocument.addresses && currentDocument.addresses.trim().length > 0 ? currentDocument.addresses : 'No address information available.'}}
+                    <span ng-bind-html="currentDocument.addresses && currentDocument.addresses.trim().length > 0 ? currentDocument.addresses : 'No address information available.' | trust"></span>
                 </p>
                 <p data-ng-show="currentIndex === 1" class="dates">
-                    {{currentDocument.date && currentDocument.date.trim().length > 0 ? currentDocument.date : 'No date information available.'}}
+                    <span ng-bind-html="currentDocument.dates && currentDocument.dates.trim().length > 0 ? currentDocument.dates : 'No date information available.' | trust"></span>
                 </p>
                 <p data-ng-show="currentIndex === 2" class="contact">
-                    {{currentDocument.contact && currentDocument.contact.trim().length > 0 ? currentDocument.contact : 'No contact information available.'}}
+                    <span ng-bind-html="currentDocument.contact && currentDocument.contact.trim().length > 0 ? currentDocument.contact : 'No contact information available.' | trust"></span>
                 </p>
                 <p data-ng-show="currentIndex === 3" class="supplementary">
-                    {{currentDocument.supInfo && currentDocument.supInfo.trim().length > 0 ? currentDocument.supInfo : 'No supplementary information available.'}}
+                    <span ng-bind-html="currentDocument.supInfo && currentDocument.supInfo.trim().length > 0 ? currentDocument.supInfo : 'No supplementary information available.' | trust"></span>
                 </p>
                 <div data-ng-show="currentIndex === 4" class="more-details">
                     <ul ng-show="regulations.length > 0">
                         <li ng-repeat="regulation in regulations">
-                            <a ng-href="regulation.url">{{ regulation.title }}</a>
+                            <span>40 CFR Part {{regulation.cfr}}: </span><a ng-href="{{regulation.url}}">{{ regulation.title }}</a>
                         </li>
                     </ul>
                     <p ng-show="regulations.length === 0">No additional details available.</p>
@@ -62,16 +62,16 @@
             </div>
             <br>
             <br>
-            <div ng-show="facilities.length > 0">
+            <div ng-show="displayedFacilities.length > 0">
                 <h2 class="title-center">The following facilities in your area might be affected:</h2>
                 <div class="details-map" id="details-map"></div>
                 <ul class="facilites">
-                    <li ng-repeat="facility in facilities">{{ (facility.FacilityName ? facility.FacilityName : 'NAME UNSPECIFIED') }} - {{ (facility.LocationAddress + ', ' + facility.CityName + ', ' + facility.CountyName + ', ' + facility.StateAbbr + ' ' + facility.ZipCode).trim() }}</li>
+                    <li ng-repeat="facility in displayedFacilities">{{ (facility.FacilityName ? facility.FacilityName : 'NAME UNSPECIFIED') }} - {{ (facility.LocationAddress + ', ' + facility.CityName + ', ' + facility.CountyName + ', ' + facility.StateAbbr + ' ' + facility.ZipCode).trim() }}</li>
                 </ul>
+                <div class="button-row" ng-show="facilitiesOffset + pageLimit <= facilities.length">
+                    <button class="button-load" data-ng-click="loadMoreFacilities()">LOAD MORE</button>
+                </div>
             </div>
-            <!--div class="button-row">
-                <button class="button-load" data-ng-click="loadMore()">LOAD MORE</button>
-            </div-->
             <br><br>
             <div ng-show="affectedPrograms.length > 0">
                 <h2 class="title-center">Programs Affected</h2>
@@ -88,27 +88,28 @@
             </div>
             <div class="clearfix"></div>
             <br><br>
-            <div ng-show="relatedNaics.length > 0">
-            <h2 class="title-center">NAICS Codes</h2>
-            <table class="results-table">
-                <thead>
-                    <tr>
-                        <td>Code</td>
-                        <td class="left">Title</td>
-                        <td>Count</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="naics in relatedNaics">
-                        <td class="naics-code">{{ naics.code }}</td>
-                        <td>{{ fixNaicsLabel(naics.label) }}</td>
-                        <td class="center">1</td>
-                    </tr>
-                </tbody>
-            </table>
-            <!--div class="button-row">
-                <button class="button-load" data-ng-click="loadMore()">LOAD MORE</button>
-            </div-->
+            <div ng-show="displayedNaics.length > 0">
+                <h2 class="title-center">NAICS Codes</h2>
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <td>Code</td>
+                            <td class="left">Title</td>
+                            <td>Count</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="naics in displayedNaics">
+                            <td class="naics-code">{{ naics.code }}</td>
+                            <td>{{ fixNaicsLabel(naics.label) }}</td>
+                            <td class="center">1</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-row" ng-show="naicsOffset + pageLimit <= relatedNaics.length">
+                    <button class="button-load" data-ng-click="loadMoreNaics()">LOAD MORE</button>
+                </div>
+            </div>
             <br><br>
         </div>
     </div>

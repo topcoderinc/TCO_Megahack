@@ -46,7 +46,7 @@
                     <tr ng-repeat="result in results">
                         <td class="light"><div>{{result.documentId}}</div></td>
                         <td class="light"><div ng-attr-title="{{result.docketTitle}}">{{result.title}}</div></td>
-                        <td ng-class="result.isCAA ? 'yes-code center' : 'no-code center'"><div>{{result.isCAA ? 'Yes' : 'No'}}</div></td>
+                        <td ng-class="isCaa(result.cfrPart.value) ? 'yes-code center' : 'no-code center'"><div>{{isCaa(result.cfrPart.value) ? 'Yes' : 'No'}}</div></td>
                         <td class="light center"><div>{{result.commentDueDate | date:dateFormat}}</div></td>
                         <td class="detail-code center" data-ng-click="loadDetails(result.documentId)"><div>Details ></div></td>
                     </tr>
@@ -55,7 +55,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="button-row" ng-show="total < results.length" ng-hide="total >= results.length">
+            <div class="button-row" ng-show="total > results.length">
                 <button class="button-load" data-ng-click="loadMore()">LOAD MORE</button>
             </div>
         </div>

@@ -12,6 +12,22 @@
     var fixNaicsLabel = function(label) {
         return label.replace(/\d{3,}/, '');
     };
+    var extractCfrs = function(cfrString) {
+        const cfrs = cfrString.substring('40 CFR'.length).match(/\d+/g);
+        return cfrs;
+    };
+    var isCaa = function(cfrString) {
+        var cfrs = extractCfrs(cfrString);
+        for (let i = 0; i < cfrs.length; i++) {
+            var cfr = parseInt(cfrs[i], 10);
+            if (cfr >= 50 && cfr <= 98) {
+                return true;
+            }
+        }
+        
+        return false;
+    };
+
 
     // landing page controller
     appControllers.controller('homeCtrl',
@@ -21,6 +37,7 @@
             $scope.naicsSearchText = '';
             $scope.substanceSearchText = '';
             $scope.fixNaicsLabel = fixNaicsLabel;
+            $scope.hasSelectedState = false;
               
             $scope.stateLang = {
                 nothingSelected: "Select State..."
@@ -31,67 +48,63 @@
             
             $scope.queries = {};
             $scope.states = [
-                { name: 'Alabama' },
-                { name: 'Alaska' },
-                { name: 'Arizona' },
-                { name: 'Arkansas' },
-                { name: 'California' },
-                { name: 'Colorado' },
-                { name: 'Connecticut' },
-                { name: 'Delaware' },
-                { name: 'Florida' },
-                { name: 'Georgia' },
-                { name: 'Hawaii' },
-                { name: 'Idaho' },
-                { name: 'Illinois' },
-                { name: 'Indiana' },
-                { name: 'Iowa' },
-                { name: 'Kansas' },
-                { name: 'Kentucky' },
-                { name: 'Louisiana' },
-                { name: 'Maine' },
-                { name: 'Maryland' },
-                { name: 'Massachusetts' },
-                { name: 'Michigan' },
-                { name: 'Minnesota' },
-                { name: 'Mississippi' },
-                { name: 'Missouri' },
-                { name: 'Montana' },
-                { name: 'Nebraska' },
-                { name: 'Nevada' },
-                { name: 'New Hampshire' },
-                { name: 'New Jersey' },
-                { name: 'New Mexico' },
-                { name: 'New York' },
-                { name: 'North Carolina' },
-                { name: 'North Dakota' },
-                { name: 'Ohio' },
-                { name: 'Oklahoma' },
-                { name: 'Oregon' },
-                { name: 'Pennsylvania' },
-                { name: 'Rhode Island' },
-                { name: 'South Carolina' },
-                { name: 'South Dakota' },
-                { name: 'Tennessee' },
-                { name: 'Texas' },
-                { name: 'Utah' },
-                { name: 'Vermont' },
-                { name: 'Virginia' },
-                { name: 'Washington' },
-                { name: 'West Virginia' },
-                { name: 'Wisconsin' },
-                { name: 'Wyoming' }
+                { name: 'Alabama', abbr: 'AL' },
+                { name: 'Alaska', abbr: 'AK' },
+                { name: 'Arizona', abbr: 'AZ' },
+                { name: 'Arkansas', abbr: 'AR' },
+                { name: 'California', abbr: 'CA' },
+                { name: 'Colorado', abbr: 'CO' },
+                { name: 'Connecticut', abbr: 'CT' },
+                { name: 'Delaware', abbr: 'DE' },
+                { name: 'Florida', abbr: 'FL' },
+                { name: 'Georgia', abbr: 'GA' },
+                { name: 'Hawaii', abbr: 'HI' },
+                { name: 'Idaho', abbr: 'ID' },
+                { name: 'Illinois', abbr: 'IL' },
+                { name: 'Indiana', abbr: 'IN' },
+                { name: 'Iowa', abbr: 'IA' },
+                { name: 'Kansas', abbr: 'KS' },
+                { name: 'Kentucky', abbr: 'KY' },
+                { name: 'Louisiana', abbr: 'LA' },
+                { name: 'Maine', abbr: 'ME' },
+                { name: 'Maryland', abbr: 'MD' },
+                { name: 'Massachusetts', abbr: 'MA' },
+                { name: 'Michigan', abbr: 'MI' },
+                { name: 'Minnesota', abbr: 'MN' },
+                { name: 'Mississippi', abbr: 'MS' },
+                { name: 'Missouri', abbr: 'MO' },
+                { name: 'Montana', abbr: 'MT' },
+                { name: 'Nebraska', abbr: 'NE' },
+                { name: 'Nevada', abbr: 'NV' },
+                { name: 'New Hampshire', abbr: 'NH' },
+                { name: 'New Jersey', abbr: 'NJ' },
+                { name: 'New Mexico', abbr: 'NM' },
+                { name: 'New York', abbr: 'NY' },
+                { name: 'North Carolina', abbr: 'NC'},
+                { name: 'North Dakota', abbr: 'ND' },
+                { name: 'Ohio', abbr: 'OH' },
+                { name: 'Oklahoma', abbr: 'OK' },
+                { name: 'Oregon', abbr: 'OR' },
+                { name: 'Pennsylvania', abbr: 'PA' },
+                { name: 'Rhode Island', abbr: 'RI' },
+                { name: 'South Carolina', abbr: 'SC' },
+                { name: 'South Dakota', abbr: 'SD' },
+                { name: 'Tennessee', abbr: 'TN' },
+                { name: 'Texas', abbr: 'TX' },
+                { name: 'Utah', abbr: 'UT' },
+                { name: 'Vermont', abbr: 'VT' },
+                { name: 'Virginia', abbr: 'VA' },
+                { name: 'Washington', abbr: 'WA' },
+                { name: 'West Virginia', abbr: 'WV' },
+                { name: 'Wisconsin', abbr: 'WI' },
+                { name: 'Wyoming', abbr: 'WY' }
             ];
             $scope.countries = [{
                 name: 'USA'
             }, {
                 name: 'UK'
             }];
-            $scope.cities = [{
-                name: 'New York'
-            }, {
-                name: 'London'
-            }];
+            $scope.cities = [];
             $scope.clearInput = function () {
                 $scope.queries = {};
                 $scope.cities.forEach(function (e) {
@@ -100,6 +113,24 @@
                 $scope.states.forEach(function (e) {
                     e.ticked = false;
                 });
+                $scope.selectedNaics = null;
+                $scope.selectedSubstance = null;
+                $scope.naicsSearchText = '';
+                $scope.substanceSearchText = '';
+                $scope.hasSelectedState = false;
+            };
+            
+            $scope.stateChanged = function() {
+                if ($scope.state && $scope.state.length > 0) {
+                    $scope.hasSelectedState = true;
+                    
+                    var abbr = $scope.state[0].abbr.toLowerCase();
+                    var url = apiBase + '/api/lookups/cities?state=' + abbr;
+                    $http({method: 'GET', url: url}).then(function(response) {
+                        console.log(JSON.stringify(response.data, null, 2));
+                        $scope.cities = response.data;
+                    });
+                }
             };
             
             $scope.lookupNaics = function(naics) {
@@ -125,14 +156,22 @@
                 var url = apiBase + '/api/search';
                 var criteria = {};
                 
-                if ($scope.state && $scope.state.length > 0) {
-                    criteria.state = $scope.state[0].name;
+                if ($scope.hasSelectedState && $scope.state && $scope.state.length > 0) {
+                    criteria.state = $scope.state[0].abbr;
+                }
+                
+                if ($scope.city && $scope.city.length > 0) {
+                    criteria.city = $scope.city[0].name;
                 }
                 
                 if ($scope.selectedNaics) {
                     criteria.naics = $scope.selectedNaics.code;
                 } else if ($scope.naicsSearchText && $scope.naicsSearchText.trim().length > 0) {
                     criteria.naics = $scope.naicsSearchText;
+                }
+                
+                if ($scope.queries.StreetAddress) {
+                    criteria.street = $scope.queries.StreetAddress;
                 }
                 
                 if ($scope.queries.ZipCode &&
@@ -187,15 +226,21 @@
             $scope.results = [];
             $scope.total = 0;
             $scope.map = null;
+            $scope.criteria = null;
+            $scope.isCaa = isCaa;
             
             $scope.loadDetails = function(documentId) {
                 loadingServices.show();
                 var url = apiBase + '/api/detail';
-                var params = { documentId: documentId };
-                if ($rootScope.criteria &&
-                    $rootScope.criteria.zip &&
-                    $rootScope.criteria.zip.trim().length > 0) {
-                    params.zip = $rootScope.criteria.zip;
+                var params = { documentId: documentId, cache: 1 };
+                if ($rootScope.criteria) {
+                    var locationKeys = ['street', 'city', 'state', 'zip'];
+                    for (var i = 0; i < locationKeys.length; i++) {
+                        var key = locationKeys[i];
+                        if ($rootScope.criteria[key] && $rootScope.criteria[key].trim().length > 0) {
+                            params[key == 'state' ? 'stateAbbr' : key] = $rootScope.criteria[key];
+                        }
+                    }
                 }
                 $http({method: 'GET', url: url, params: params }).then(
                     function success(response) {
@@ -217,9 +262,24 @@
 
             $scope.loadMore = function () {
                 loadingServices.show();
-                $timeout(function () {
-                    loadingServices.hide();
-                }, 2000);
+                var url = apiBase + '/api/search';
+                $scope.criteria.offset += $scope.criteria.limit;
+                $http({method: 'GET', url: url, params: $scope.criteria }).then(
+                    function success(response) {
+                        var items = response.data.items;
+                        if (items && items.length > 0) {
+                            for (var i = 0; i < items.length; i++) {
+                                $scope.results.push(items[i]);
+                            }
+                        }
+                        
+                        loadingServices.hide();
+                    },
+                    function error() {
+                        alert('The request could not be completed successfully. Please try again.');
+                        loadingServices.hide();
+                    }
+                );
             };
         
             function onResultsLoaded() {
@@ -244,9 +304,11 @@
                 
                 var applyLocationToMap = function(address) {
                     if ($scope.location) {
+                        $rootScope.location = $scope.location;
+                        
                         if (!$scope.map) {
                             $scope.map = new google.maps.Map(document.getElementById('search-map'), {
-                                zoom: 12,
+                                zoom: 10,
                                 center: $scope.location
                             });
                         }
@@ -256,6 +318,7 @@
                             map: $scope.map,
                             title: address
                         });
+                        
                         $scope.map.setCenter(marker.getPosition());
                     }
                 };
@@ -271,18 +334,28 @@
                     });
                 };
                 
-                if (criteria.state || criteria.zip) {
-                    var address = 'USA';
-                    if (criteria.zip.trim().length > 0) {
-                        address = criteria.zip + ', USA'; 
-                    } else if (criteria.state.trim().length > 0) {
-                        address = criteria.state + ', USA';
+                if (criteria.street || criteria.city || criteria.state || criteria.zip) {
+                    var address = '';
+                    
+                    if (criteria.street && criteria.street.trim().length > 0) {
+                        address += criteria.street;
+                    }
+                    if (criteria.city && criteria.city.trim().length > 0) {
+                        address += address.trim().length > 0 ? ', ' + criteria.city : criteria.city;
+                    }
+                    if (criteria.state && criteria.state.trim().length > 0) {
+                        address += address.trim().length > 0 ? ', ' + criteria.state : criteria.state;
+                    }
+                    if (criteria.zip && criteria.zip.trim().length > 0) {
+                        address += address.trim().length > 0 ? ', ' + criteria.zip : criteria.zip;
                     }
                     
-                    var addressGeocode = $scope.geocode(address);
-                    console.log(JSON.stringify(addressGeocode, null, 2));
+                    address += address.trim().length > 0 ? ', USA' : 'USA';
+                    
+                    $scope.geocode(address);
                 }
                 
+                $scope.criteria = $rootScope.criteria;
                 $scope.results = $rootScope.searchResults;
                 $scope.total = $rootScope.totalResults;
             }
@@ -298,6 +371,9 @@
             $scope.documentId = null;
             $scope.currentDocument = null;
             $scope.fixNaicsLabel = fixNaicsLabel;
+            $scope.pageLimit = pageLimit;
+            $scope.isCaa = isCaa;
+            $scope.markers = [];
             
             loadingServices.init();
 
@@ -315,7 +391,49 @@
             };
 
             $scope.commentRule = function () {
-                $window.open('https://www.regulations.gov/document?D=' + $rootScope.documentId, '_blank');
+                $window.open('https://www.regulations.gov/comment?D=' + $rootScope.documentId, '_blank');
+            };
+            
+            $scope.loadMoreFacilities = function() {
+                loadingServices.show();
+                if ($scope.facilities.length > 0) {
+                    for (var i = $scope.facilitiesOffset; i < $scope.facilities.length && i < $scope.facilitiesOffset + pageLimit; i++) {
+                        $scope.displayedFacilities.push($scope.facilities[i]);
+                    }
+                    $scope.facilitiesOffset += pageLimit;
+                
+                    if (!$scope.map && $scope.location) {
+                        $scope.map = new google.maps.Map(document.getElementById('details-map'), {
+                            zoom: 10,
+                            center: $scope.location
+                        });
+                    }
+                    
+                    if ($scope.map) {
+                        for (var i = 0; i < $scope.displayedFacilities.length; i++) {
+                            var facility = $scope.displayedFacilities[i];
+                            var facilityLocation = { lat: parseFloat(facility.Latitude83), lng: parseFloat(facility.Longitude83) };
+                            $scope.markers.push(new google.maps.Marker({
+                                position: facilityLocation,
+                                map: $scope.map,
+                                title: facility.FacilityName}));
+                        }
+                    }
+                }
+                loadingServices.hide();
+            };
+            
+            $scope.loadMoreNaics = function() {
+                loadingServices.show();
+                
+                if ($scope.relatedNaics.length > 0) {
+                    for (var i = $scope.naicsOffset; i < $scope.relatedNaics.length && i < $scope.naicsOffset + pageLimit; i++) {
+                        $scope.displayedNaics.push($scope.relatedNaics[i]);
+                    }
+                    $scope.naicsOffset += pageLimit;
+                }
+                
+                loadingServices.hide();
             };
             
             function onDetailsLoaded() {
@@ -331,24 +449,25 @@
                 $scope.relatedNaics = $scope.currentDocument.naics;
                 $scope.regulations = $scope.currentDocument.allRegulations;
                 
-                if ($scope.facilities.length > 0) {
-                    if (!$scope.map) {
-                        $scope.map = new google.maps.Map(document.getElementById('details-map'), {
-                            zoom: 12,
-                            center: $scope.location
-                        });
-                    }
-                    
-                    var markers = [];
-                    for (let i = 0; i < $scope.facilities.length; i++) {
-                        var facility = $scope.facilities[i];
-                        var facilityLocation = { lat: facility.Latitude83, lng: facility.Longitude83 };
-                        markers.push(new google.maps.Marker({
-                            position: facilityLocation,
-                            map: $scope.map,
-                            title: facility.FacilityName}));
-                    }
-                    $scope.map.setCenter(markers[0].getPosition());
+                $scope.facilitiesOffset = 0;
+                $scope.naicsOffset = 0;
+                $scope.displayedFacilities = [];
+                $scope.displayedNaics = [];
+                
+                $scope.location = $rootScope.location;
+                $scope.loadMoreFacilities();
+                $scope.loadMoreNaics();
+                
+                console.log(JSON.stringify($scope.relatedNaics, null, 2));
+                console.log(JSON.stringify($scope.displayedNaics, null, 2));
+                
+                if ($scope.map) {
+                    setTimeout(function() {
+                        google.maps.event.trigger($scope.map, 'resize');
+                        if ($scope.markers.length > 0) {
+                            $scope.map.setCenter($scope.markers[$scope.markers.length - 1].getPosition());
+                        }
+                    }, 1000);
                 }
             }
 
