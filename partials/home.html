@@ -16,8 +16,10 @@
         <div class="search-item first-item">
             <div class="search-item-name">Select State</div>
             <div class="search-item-input" data-ng-class="{'none-select': state.length == 0}">
-                <isteven-multi-select input-model="states" output-model="state" button-label="icon name" item-label="icon name maker" tick-property="ticked"
-                    selection-mode="single" translation="stateLang" helper-elements="filter">
+                <isteven-multi-select input-model="states" output-model="state" button-label="icon name"
+                    item-label="icon name maker" tick-property="ticked"
+                    selection-mode="single" translation="stateLang" helper-elements="filter"
+                    on-item-click="stateChanged()">
                 </isteven-multi-select>
             </div>
         </div>
@@ -80,7 +82,7 @@
         <div class="search-item-sm">
             <div class="search-item-name">Street</div>
             <div class="search-item-input">
-                <input type="" name="" value="" data-ng-model="queries.streetCode" placeholder="Enter Street Number">
+                <input type="" name="" value="" data-ng-model="queries.StreetAddress" placeholder="Enter Street Number">
             </div>
         </div>
         <div class="button-row">

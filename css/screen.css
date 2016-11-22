@@ -429,11 +429,12 @@ h4 {
 .search-item-sm .search-item-input {
   float: left;
   width: 33%;
+  margin-right: 10px;
 }
 
-.search-item-sm div:nth-child(3) {
+/*.search-item-sm div:nth-child(3) {
   margin-left: 4%;
-}
+}*/
 
 .search-item-input input {
   width: 100%;
@@ -778,6 +779,12 @@ input:-moz-placeholder {
   border-top: 8px solid #dedede;
   border-right: 8px solid transparent;
   border-left: 8px solid transparent;
+}
+
+.multiSelect .checkBoxContainer {
+  max-height: 300px;
+  overflow: auto;
+  overflow-x: hidden
 }
 
 .comment-box {
