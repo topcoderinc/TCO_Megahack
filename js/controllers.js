@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    var apiBase = 'http://tco-megahack:3100';
+    var apiBase = 'http://ec2-35-164-132-205.us-west-2.compute.amazonaws.com:3100';
     var defaultDateFormat = "MM/dd/yyyy 'at' h:mm a";
     var pageLimit = 10;
     
