@@ -2,12 +2,12 @@
 (function () {
     'use strict';
 
-    var apiBase = 'http://ec2-35-164-132-205.us-west-2.compute.amazonaws.com:3100';
+    var apiBase = 'http://127.0.0.1:3100';
     var defaultDateFormat = "MM/dd/yyyy 'at' h:mm a";
     var pageLimit = 10;
-    
+
     var geocodeBase = 'https://maps.googleapis.com/maps/api/geocode/json';
-    
+
     var appControllers = angular.module('EPA.controllers', ['DMD.services']);
     var fixNaicsLabel = function(label) {
         return label.replace(/\d{3,}/, '');
@@ -24,7 +24,7 @@
                 return true;
             }
         }
-        
+
         return false;
     };
 
@@ -38,14 +38,14 @@
             $scope.substanceSearchText = '';
             $scope.fixNaicsLabel = fixNaicsLabel;
             $scope.hasSelectedState = false;
-              
+
             $scope.stateLang = {
                 nothingSelected: "Select State..."
             };
             $scope.cityLang = {
                 nothingSelected: "Select City..."
             };
-            
+
             $scope.queries = {};
             $scope.states = [
                 { name: 'Alabama', abbr: 'AL' },
@@ -119,11 +119,11 @@
                 $scope.substanceSearchText = '';
                 $scope.hasSelectedState = false;
             };
-            
+
             $scope.stateChanged = function() {
                 if ($scope.state && $scope.state.length > 0) {
                     $scope.hasSelectedState = true;
-                    
+
                     var abbr = $scope.state[0].abbr.toLowerCase();
                     var url = apiBase + '/api/lookups/cities?state=' + abbr;
                     $http({method: 'GET', url: url}).then(function(response) {
@@ -132,68 +132,68 @@
                     });
                 }
             };
-            
+
             $scope.lookupNaics = function(naics) {
                 var url = apiBase + '/api/lookups/naics';
                 var params = (naics && naics.trim().length > 0) ? { searchTerm: naics } : null;
                 return $http({ method: 'GET', url: url, params: params }).then(function(response) {
-                   return response.data.items; 
+                   return response.data.items;
                 });
             };
-            
+
             $scope.lookupSubstances = function(substance) {
                 var url = apiBase + '/api/lookups/substances';
                 var params = (substance && substance.trim().length > 0) ? { searchTerm: substance } : null;
                 return $http({ method: 'GET', url: url, params: params }).then(function(response) {
-                   return response.data.items; 
+                   return response.data.items;
                 });
             };
-            
+
             $scope.goNext = function() {
                 $rootScope.searchResults = [];
                 $rootScope.totalResults = 0;
-                
+
                 var url = apiBase + '/api/search';
                 var criteria = {};
-                
+
                 if ($scope.hasSelectedState && $scope.state && $scope.state.length > 0) {
                     criteria.state = $scope.state[0].abbr;
                 }
-                
+
                 if ($scope.city && $scope.city.length > 0) {
                     criteria.city = $scope.city[0].name;
                 }
-                
+
                 if ($scope.selectedNaics) {
                     criteria.naics = $scope.selectedNaics.code;
                 } else if ($scope.naicsSearchText && $scope.naicsSearchText.trim().length > 0) {
                     criteria.naics = $scope.naicsSearchText;
                 }
-                
+
                 if ($scope.queries.StreetAddress) {
                     criteria.street = $scope.queries.StreetAddress;
                 }
-                
+
                 if ($scope.queries.ZipCode &&
                     $scope.queries.ZipCode.trim().length > 0) {
                     criteria.zip = $scope.queries.ZipCode;
                 }
-                
+
                 if ($scope.selectedSubstance) {
                     criteria.substance = $scope.selectedSubstance.name;
                 } else if ($scope.substanceSearchText && $scope.substanceSearchText.trim().length > 0) {
                     criteria.substance = $scope.substanceSearchText;
                 }
-                
-                
+
+
                 if ($scope.queries.ProgramName &&
                     $scope.queries.ProgramName.trim().length > 0) {
                     criteria.program = $scope.queries.ProgramName;
                 }
-                
+
                 criteria.offset = 0;
                 criteria.limit = pageLimit;
-                
+
                 $rootScope.criteria = criteria;
                 loadingServices.show();
                 $http({method: 'GET', url: url, params: criteria }).then(
@@ -228,7 +228,7 @@
             $scope.map = null;
             $scope.criteria = null;
             $scope.isCaa = isCaa;
-            
+
             $scope.loadDetails = function(documentId) {
                 loadingServices.show();
                 var url = apiBase + '/api/detail';
@@ -255,7 +255,7 @@
                     }
                 );
             };
-            
+
             $scope.goPrev = function () {
                 $location.path('/home');
             };
@@ -272,7 +272,7 @@
                                 $scope.results.push(items[i]);
                             }
                         }
-                        
+
                         loadingServices.hide();
                     },
                     function error() {
@@ -281,13 +281,13 @@
                     }
                 );
             };
-        
+
             function onResultsLoaded() {
                 if (!$rootScope.criteria) {
                     $location.path('/');
                     return;
                 }
-                
+
                 var criteria = $rootScope.criteria;
                 angular.element(document.getElementsByClassName('search-query-value-state')[0]).html(
                     criteria.state ? criteria.state : '<i>Unspecified</i>'
@@ -301,28 +301,28 @@
                 angular.element(document.getElementsByClassName('search-query-value-program')[0]).html(
                     criteria.program ? criteria.program : '<i>Unspecified</i>'
                 );
-                
+
                 var applyLocationToMap = function(address) {
                     if ($scope.location) {
                         $rootScope.location = $scope.location;
-                        
+
                         if (!$scope.map) {
                             $scope.map = new google.maps.Map(document.getElementById('search-map'), {
                                 zoom: 10,
                                 center: $scope.location
                             });
                         }
-                        
+
                         var marker = new google.maps.Marker({
                             position: $scope.location,
                             map: $scope.map,
                             title: address
                         });
-                        
+
                         $scope.map.setCenter(marker.getPosition());
                     }
                 };
-                
+
                 $scope.geocode = function(address) {
                     return $http({ method: 'GET', url: geocodeBase, params: { address: address } }).then(function(response) {
                         var results = response.data.results;
@@ -333,10 +333,10 @@
                         return response.data.results && response.data.results.length > 0 ? response.data.results[0] : null;
                     });
                 };
-                
+
                 if (criteria.street || criteria.city || criteria.state || criteria.zip) {
                     var address = '';
-                    
+
                     if (criteria.street && criteria.street.trim().length > 0) {
                         address += criteria.street;
                     }
@@ -349,19 +349,19 @@
                     if (criteria.zip && criteria.zip.trim().length > 0) {
                         address += address.trim().length > 0 ? ', ' + criteria.zip : criteria.zip;
                     }
-                    
+
                     address += address.trim().length > 0 ? ', USA' : 'USA';
-                    
+
                     $scope.geocode(address);
                 }
-                
+
                 $scope.criteria = $rootScope.criteria;
                 $scope.results = $rootScope.searchResults;
                 $scope.total = $rootScope.totalResults;
             }
-            
+
             loadingServices.init();
-            onResultsLoaded();            
+            onResultsLoaded();
         }
     );
 
@@ -374,7 +374,7 @@
             $scope.pageLimit = pageLimit;
             $scope.isCaa = isCaa;
             $scope.markers = [];
-            
+
             loadingServices.init();
 
             $scope.currentIndex = 0;
@@ -393,7 +393,7 @@
             $scope.commentRule = function () {
                 $window.open('https://www.regulations.gov/comment?D=' + $rootScope.documentId, '_blank');
             };
-            
+
             $scope.loadMoreFacilities = function() {
                 loadingServices.show();
                 if ($scope.facilities.length > 0) {
@@ -401,14 +401,14 @@
                         $scope.displayedFacilities.push($scope.facilities[i]);
                     }
                     $scope.facilitiesOffset += pageLimit;
-                
+
                     if (!$scope.map && $scope.location) {
                         $scope.map = new google.maps.Map(document.getElementById('details-map'), {
                             zoom: 10,
                             center: $scope.location
                         });
                     }
-                    
+
                     if ($scope.map) {
                         for (var i = 0; i < $scope.displayedFacilities.length; i++) {
                             var facility = $scope.displayedFacilities[i];
@@ -422,45 +422,45 @@
                 }
                 loadingServices.hide();
             };
-            
+
             $scope.loadMoreNaics = function() {
                 loadingServices.show();
-                
+
                 if ($scope.relatedNaics.length > 0) {
                     for (var i = $scope.naicsOffset; i < $scope.relatedNaics.length && i < $scope.naicsOffset + pageLimit; i++) {
                         $scope.displayedNaics.push($scope.relatedNaics[i]);
                     }
                     $scope.naicsOffset += pageLimit;
                 }
-                
+
                 loadingServices.hide();
             };
-            
+
             function onDetailsLoaded() {
                 if (!$rootScope.documentId || !$rootScope.currentDocument) {
                     $location.path('/home');
                     return;
                 }
-                
+
                 $scope.documentId = $rootScope.documentId;
                 $scope.currentDocument = $rootScope.currentDocument;
                 $scope.facilities = $scope.currentDocument.facilities;
                 $scope.affectedPrograms = $scope.currentDocument.programs;
                 $scope.relatedNaics = $scope.currentDocument.naics;
                 $scope.regulations = $scope.currentDocument.allRegulations;
-                
+
                 $scope.facilitiesOffset = 0;
                 $scope.naicsOffset = 0;
                 $scope.displayedFacilities = [];
                 $scope.displayedNaics = [];
-                
+
                 $scope.location = $rootScope.location;
                 $scope.loadMoreFacilities();
                 $scope.loadMoreNaics();
-                
+
                 console.log(JSON.stringify($scope.relatedNaics, null, 2));
                 console.log(JSON.stringify($scope.displayedNaics, null, 2));
-                
+
                 if ($scope.map) {
                     setTimeout(function() {
                         google.maps.event.trigger($scope.map, 'resize');
@@ -469,6 +469,13 @@
                         }
                     }, 1000);
                 }
+                
+                $scope.$on('$viewContentLoaded', function(){
+                  //Here your view content is fully loaded !!
+                  setTimeout(function() {
+                    loadAnnotator($scope.documentId);
+                  }, 300);
+                });
             }
 
             loadingServices.init();

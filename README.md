@@ -17,6 +17,10 @@ You can set some configuration values to suit your environment by editing api/co
 - `defaultDateFormat` represents the date format that will be used to displayed dates in the frontend
 - `pageLimit` represents the number of results to return for search results
 
+To setup the annotation store url, edit the file js/script.js
+
+- `baseUrl` represents the base URL where the store backend is located
+
 ## Verification
 
 - Start the backend using `npm start`.
