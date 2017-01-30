@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    var apiBase = 'http://localhost:3100';
+    var apiBase = 'http://ec2-52-90-119-199.compute-1.amazonaws.com:3100';
     var defaultDateFormat = "MM/dd/yyyy 'at' h:mm a";
     var pageLimit = 10;
 
