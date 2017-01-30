@@ -1,4 +1,4 @@
-var annotationsBase = 'http://ec2-54-87-151-139.compute-1.amazonaws.com/annotations';
+var annotationsBase = 'http://localhost:5000';
 
 var pageUri = function (documentId) {
     return function() {
