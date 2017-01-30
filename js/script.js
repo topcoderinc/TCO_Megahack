@@ -1,4 +1,4 @@
-var baseUrl = 'http://ec2-54-87-151-139.compute-1.amazonaws.com/annotations';
+var annotationsBase = 'http://localhost:5000';
 
 var pageUri = function (documentId) {
     return function() {
@@ -10,19 +10,6 @@ var pageUri = function (documentId) {
     };
 };
 
-var loadAnnotator = function(documentId) {
-  var app = new annotator.App();
-  app.include(annotator.ui.main);
-  app.include(annotator.storage.http, {
-      prefix: baseUrl + '/api',
-      headers: { 'x-annotator-auth-token': getToken() }
-  });
-  app.include(pageUri(documentId));
-  app.start().then(function () {
-      app.annotations.load({uri: documentId});
-  });
-}
-
 var getToken = function() {
   // Header
   var oHeader = {alg: 'HS256', typ: 'JWT'};
@@ -30,13 +17,13 @@ var getToken = function() {
   var oPayload = {};
   var tNow = KJUR.jws.IntDate.get('now');
   var tEnd = KJUR.jws.IntDate.get('now + 1day');
-  oPayload.iss = baseUrl;
+  oPayload.iss = annotationsBase;
   oPayload.sub = 'user';
   oPayload.nbf = tNow;
   oPayload.iat = tNow;
   oPayload.exp = tEnd;
   oPayload.jti = 'id123456';
-  oPayload.aud = baseUrl + '/api';
+  oPayload.aud = annotationsBase + '/api';
   // Sign JWT
   var sHeader = JSON.stringify(oHeader);
   var sPayload = JSON.stringify(oPayload);

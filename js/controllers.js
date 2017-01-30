@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    var apiBase = 'http://127.0.0.1:3100';
+    var apiBase = 'http://localhost:3100';
     var defaultDateFormat = "MM/dd/yyyy 'at' h:mm a";
     var pageLimit = 10;
 
@@ -13,7 +13,7 @@
         return label.replace(/\d{3,}/, '');
     };
     var extractCfrs = function(cfrString) {
-        const cfrs = cfrString.substring('40 CFR'.length).match(/\d+/g);
+        const cfrs = cfrString ? cfrString.substring('40 CFR'.length).match(/\d+/g) : '';
         return cfrs;
     };
     var isCaa = function(cfrString) {
@@ -380,6 +380,7 @@
             $scope.currentIndex = 0;
 
             $scope.goPrev = function () {
+                $scope.app.destroy();
                 $location.path('/results');
             };
 
@@ -396,7 +397,7 @@
 
             $scope.loadMoreFacilities = function() {
                 loadingServices.show();
-                if ($scope.facilities.length > 0) {
+                if ($scope.facilities && $scope.facilities.length > 0) {
                     for (var i = $scope.facilitiesOffset; i < $scope.facilities.length && i < $scope.facilitiesOffset + pageLimit; i++) {
                         $scope.displayedFacilities.push($scope.facilities[i]);
                     }
@@ -469,14 +470,23 @@
                         }
                     }, 1000);
                 }
-                
-                $scope.$on('$viewContentLoaded', function(){
-                  //Here your view content is fully loaded !!
-                  setTimeout(function() {
-                    loadAnnotator($scope.documentId);
-                  }, 300);
-                });
             }
+
+            $scope.$on('$viewContentLoaded', function() {
+                var app = new annotator.App();
+                app.include(annotator.ui.main, {
+                  element: document.getElementById('details-panel')
+                });
+                app.include(annotator.storage.http, {
+                    prefix: annotationsBase + '/api',
+                    headers: { 'x-annotator-auth-token': getToken() }
+                });
+                app.include(pageUri($scope.documentId));
+                app.start().then(function () {
+                    app.annotations.load({uri: $scope.documentId});
+                });
+                $scope.app = app;
+            });
 
             loadingServices.init();
             onDetailsLoaded();
